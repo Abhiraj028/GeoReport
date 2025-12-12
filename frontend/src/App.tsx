@@ -9,7 +9,7 @@ function App(){
   return(
     <MapContainer
       center={[31.9048, 77.1734]}
-      zoom={10}
+      zoom={11}
       scrollWheelZoom={true}
       minZoom={9}
       maxZoom={18}
