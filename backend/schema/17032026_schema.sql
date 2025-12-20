@@ -18,11 +18,12 @@ create table users (
 
 create table reports (
     id bigserial primary key,
-    user_id bigint references users(id) on delete set null,
+    user_id bigint references users(device_token) on delete set null,
     
     latitude double precision not null,
     longitude double precision not null,
     location geography(Point, 4326) generated always as (ST_SetSRID(ST_MakePoint(longitude, latitude), 4326)) stored,
+    cluster_id bigint references clusters(id) on delete set null,
 
     text_content text,
 
@@ -46,3 +47,21 @@ create table report_media (
 
     created_at timestamptz default now()
 );
+
+create table clusters (
+    id bigserial primary key,
+
+    centroid geography(Point, 4326) not null,
+    max_spread double precision not null,
+
+    report_count integer default 1,
+    confidence_score double precision default 0.0,
+    last_confidence_update timestamptz,
+
+    last_updated_at timestamptz,
+    is_active boolean default true,
+
+    created_at timestamptz default now(),
+);
+
+create index idx_clusters_centroid on clusters using gist(centroid);
