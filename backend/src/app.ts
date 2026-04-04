@@ -1,13 +1,21 @@
-import express, { Express } from "express";
+import express, { type Express } from "express";
 import cors from "cors";
-import reportsRoutes from "./routes/reports.routes";
-import { errorMiddleware } from "./middlewares/errorMiddleware";
+import { errorMiddleware } from "./middlewares/error.middleware.ts";
+import reportsRouter from "./routes/reports.routes.ts";
 
-export const app : Express = express();
+export const app: Express = express();
 
-app.use(cors({origin: "*"}));
+// ── Middleware ───────────────────────────────────────────────
+app.use(
+  cors({
+    origin:      process.env.CORS_ORIGIN ?? "http://localhost:5173",
+    credentials: true, // required for httpOnly cookie transport
+  })
+);
 app.use(express.json());
 
-app.use("/api/v1/reports", reportsRoutes );
-app.use(errorMiddleware);
+// ── Routes ───────────────────────────────────────────────────
+app.use("/api/v1/reports", reportsRouter);
 
+// ── Error handler (must be last) ────────────────────────────
+app.use(errorMiddleware);

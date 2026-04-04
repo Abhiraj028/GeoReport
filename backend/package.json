@@ -1,25 +1,27 @@
 {
-  "name": "backend",
+  "name": "slidetag-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "SlideTag backend — anonymous geo-report API",
+  "module": "src/server.ts",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "bun --watch src/server.ts",
+    "start": "bun src/server.ts",
+    "typecheck": "node_modules/.bin/tsc --noEmit"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
   "dependencies": {
-    "@types/cors": "^2.8.19",
-    "@types/dotenv": "^6.1.1",
-    "@types/express": "^5.0.6",
-    "@types/node": "^25.5.0",
-    "@types/pg": "^8.18.0",
+    "@supabase/supabase-js": "^2.112.3",
     "cors": "^2.8.6",
-    "dotenv": "^17.3.1",
+    "dotenv": "^16.5.0",
     "express": "^5.2.1",
     "pg": "^8.20.0",
     "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^22.0.0",
+    "@types/pg": "^8.18.0",
+    "typescript": "^5.8.3"
   }
 }
